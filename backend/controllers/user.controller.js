@@ -169,7 +169,7 @@ export const updateProfile = async (req, res) => {
     const file = req.file;
     const userId = req.id; // middleware authentication
 
-    // Convert skills to array if provided, otherwise keep existing
+    // Convert skills to array
     const skillsArray = skills && skills.split(",");
 
     // Build the update object
@@ -188,14 +188,14 @@ export const updateProfile = async (req, res) => {
       });
     }
 
-    // Perform the update using findByIdAndUpdate
+    // update user
     const user = await User.findByIdAndUpdate(
       userId,
       { $set: updates },
       { new: true, runValidators: true }
     );
 
-    // If user not found
+    // user not found
     if (!user) {
       return res.status(404).json({
         message: "User not found",
